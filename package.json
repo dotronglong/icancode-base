@@ -1,0 +1,40 @@
+{
+  "name": "@icancode/base",
+  "version": "1.0.0",
+  "description": "Base package for any NodeJS projects",
+  "main": "main",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "tsc && mocha",
+    "lint": "eslint lib/**/*.ts",
+    "clean": "find . -type f -not -path './node_modules/*' -not -path './test/*' -and \\( -name '*.d.ts' -o -name '*.js' \\) -delete",
+    "prebuild": "yarn clean && yarn lint --fix",
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com:dotronglong/icancode-base.git"
+  },
+  "keywords": [
+    "icancode",
+    "base"
+  ],
+  "author": "Long Do <dotronglong@live.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dotronglong/icancode-base/issues"
+  },
+  "homepage": "https://github.com/dotronglong/icancode-base#readme",
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "@typescript-eslint/eslint-plugin": "^5.57.1",
+    "@typescript-eslint/parser": "^5.57.1",
+    "assert": "^2.0.0",
+    "eslint": "^8.37.0",
+    "eslint-config-google": "^0.14.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.0.3"
+  }
+}
