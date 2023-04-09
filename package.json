@@ -9,8 +9,7 @@
   "scripts": {
     "test": "tsc && mocha",
     "lint": "eslint lib/**/*.ts",
-    "clean": "find . -type f -not -path './node_modules/*' -not -path './test/*' -and \\( -name '*.d.ts' -o -name '*.js' \\) -delete",
-    "prebuild": "yarn clean && yarn lint --fix",
+    "prebuild": "yarn lint --fix",
     "build": "tsc"
   },
   "repository": {
