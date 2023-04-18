@@ -51,4 +51,4 @@ Thumbs.db
 # Built files
 *.d.ts
 *.js
-!.spec.js
+!*.spec.js
