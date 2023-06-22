@@ -1,3 +1,5 @@
+import {HashMap} from './Types';
+
 export interface Getter {
   /**
    * Get value by name
@@ -26,4 +28,10 @@ export interface Getter {
    * @return {number | undefined}
    */
   getNumber(name: string): number | undefined;
+
+  /**
+   * Returns all values
+   * @return {HashMap}
+   */
+  all(): HashMap;
 }
