@@ -2,6 +2,7 @@ import {HashMap, StringHashMap} from "./lib/Types";
 import {toHashMap, toView} from "./lib/Base";
 import {HttpError} from './lib/Http';
 import {Cipher, Decipher} from './lib/Crypto';
+import {Getter} from "./lib/Getter";
 
 export {
   HashMap,
@@ -10,5 +11,6 @@ export {
   toView,
   HttpError,
   Cipher,
-  Decipher
+  Decipher,
+  Getter
 }
