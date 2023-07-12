@@ -1,6 +1,6 @@
 {
   "name": "@icancode/base",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Base package for any NodeJS projects",
   "main": "main",
   "directories": {
@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "tsc && mocha",
-    "lint": "eslint lib/**/*.ts",
+    "lint": "eslint lib/**/*.ts main.ts",
     "prebuild": "yarn lint --fix",
     "build": "tsc"
   },
