@@ -3,7 +3,7 @@ import {toHashMap, toView} from './lib/Base';
 import {HttpError} from './lib/Http';
 import {Cipher, Decipher} from './lib/Crypto';
 import {Getter} from './lib/Getter';
-import {HashMapConvertible} from './lib/Converter';
+import {HashMapConvertible} from './lib/Convertible';
 
 export {
   HashMap,
