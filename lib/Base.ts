@@ -1,7 +1,7 @@
 import {HashMap} from './Types';
 
 export const toHashMap = function(
-    o,
+    o: any,
     only?: string[],
     ignore?: string[],
 ): HashMap {
