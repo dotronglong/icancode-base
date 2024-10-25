@@ -1,4 +1,4 @@
-const {toHashMap, toView} = require("../main");
+const {toHashMap, toView, setNestedValue, removeNestedValue} = require("../main");
 const assert = require('assert');
 
 class Dummy {
@@ -52,5 +52,33 @@ describe('toView', function() {
       foo: "AAA",
       bar: "BBB"
     });
+  });
+});
+
+describe('setNestedValue', function() {
+  it('should mask data correctly when path is a string', function() {
+    const data = { sensitive: { password: "1234", token: "abcd" } };
+    setNestedValue(data, 'sensitive.password', '***');
+    assert.strictEqual(data.sensitive.password, '***');
+  });
+  it('should mask data correctly when path is an array of string', function() {
+    const data = { sensitive: { password: "1234", token: "abcd" } };
+    setNestedValue(data, ['sensitive.password', 'sensitive.token'], '***');
+    assert.strictEqual(data.sensitive.password, '***');
+    assert.strictEqual(data.sensitive.token, '***');
+  });
+});
+
+describe('removeNestedValue', function() {
+  it('should remove data correctly when path is a string', function() {
+    const data = { sensitive: { password: "1234", token: "abcd" } };
+    removeNestedValue(data, 'sensitive.password');
+    assert.strictEqual(data.sensitive.password, undefined);
+  });
+  it('should remove data correctly when path is an array of string', function() {
+    const data = { sensitive: { password: "1234", token: "abcd" } };
+    removeNestedValue(data, ['sensitive.password', 'sensitive.token']);
+    assert.strictEqual(data.sensitive.password, undefined);
+    assert.strictEqual(data.sensitive.token, undefined);
   });
 });

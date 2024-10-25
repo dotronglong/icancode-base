@@ -40,3 +40,44 @@ export const toView = (data: any, only?: string[], ignore?: string[]): any => {
 
   return toHashMap(data, only, ignore);
 };
+
+export const setNestedValue = (
+    data: any, path: string | string[], value: string,
+): void => {
+  if (Array.isArray(path)) {
+    path.forEach((p) => setNestedValue(data, p, value));
+    return;
+  }
+
+  const keys = path.split('.');
+  let current = data;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (!current[keys[i]]) {
+      current[keys[i]] = {};
+    }
+    current = current[keys[i]];
+  }
+
+  current[keys[keys.length - 1]] = value;
+};
+
+export const removeNestedValue = (data: any, path: string | string[]): void => {
+  if (Array.isArray(path)) {
+    path.forEach((p) => removeNestedValue(data, p));
+    return;
+  }
+
+  const keys = path.split('.');
+  let current = data;
+
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (current[keys[i]]) {
+      current = current[keys[i]];
+    } else {
+      return;
+    }
+  }
+
+  delete current[keys[keys.length - 1]];
+};
