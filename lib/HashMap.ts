@@ -9,3 +9,11 @@ export interface HashMapConvertible {
    */
   toHashMap(only?: string[], ignore?: string[]): HashMap;
 }
+
+export interface HashMapImportable {
+  /**
+   * Import data from HashMap
+   * @param {HashMap} data
+   */
+  fromHashMap(data: HashMap): void;
+}
