@@ -1,28 +1,39 @@
 /**
  * HttpError
  */
-export class HttpError {
+export interface HttpError {
+  /**
+   * Http Status Code
+   * Example: 200, 401
+   */
   status: number;
-  code: string;
-  message: string;
-  cause: any;
 
   /**
-   * Constructor
-   * @param {number} status
-   * @param {string=} code
-   * @param {string=} message
-   * @param {*=} cause
+   * The error's code
+   * Example: request.invalid, 000.001
    */
-  constructor(
-      status: number,
-      code?: string,
-      message?: string,
-      cause?: any,
-  ) {
-    this.status = status;
-    this.code = code || '';
-    this.message = message || '';
-    this.cause = cause || null;
-  }
+  code: string;
+
+  /**
+   * The error's message
+   * Example: Request is invalid
+   */
+  message: string;
+
+  /**
+   * The root cause of error
+   * It could be an instance of Error
+   */
+  cause?: any;
+}
+
+/**
+ * Tells if a object is an implementation of HttpError
+ * @param {any} e
+ * @return {boolean}
+ */
+export function isHttpError(e: any): boolean {
+  return typeof e.status === 'number' &&
+  typeof e.code === 'string' &&
+  typeof e.message === 'string';
 }
