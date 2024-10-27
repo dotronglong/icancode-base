@@ -5,40 +5,37 @@ export const toHashMap = function(
     only?: string[],
     ignore?: string[],
 ): HashMap {
-  const keys = Object.keys(o);
-  const data: HashMap = {};
-  keys.forEach((k) => {
-    if ((only && Array.isArray(only) && only.indexOf(k) === -1) ||
-    (ignore && Array.isArray(ignore) && ignore.indexOf(k) >= 0)) {
-      // this key will not be exported
-      return;
+  // Early return if 'only' is defined but empty, resulting in an empty object.
+  if (only && only.length === 0) return {};
+
+  return Object.entries(o).reduce((data: HashMap, [key, value]) => {
+    // Skip keys not in 'only' list or present in 'ignore' list
+    if ((only && !only.includes(key)) || (ignore && ignore.includes(key))) {
+      return data;
     }
 
-    if (typeof o[k] === 'undefined' || typeof(o[k]) === 'function') {
-      return;
+    // Exclude undefined and function values
+    if (typeof value === 'undefined' || typeof value === 'function') {
+      return data;
     }
 
-    if (typeof o[k] === 'object') {
-      data[k] = Array.isArray(o[k]) ? o[k] : toHashMap(o[k]);
-    } else {
-      data[k] = o[k];
-    }
-  });
+    // Recursively process nested objects, skip if it's an array
+    data[key] = typeof value === 'object' && !Array.isArray(value) ?
+      toHashMap(value) :
+      value;
 
-  return data;
+    return data;
+  }, {});
 };
 
-export const toView = (data: any, only?: string[], ignore?: string[]): any => {
-  if (Array.isArray(data)) {
-    const items: HashMap[] = [];
-    for (const item of data) {
-      items.push(toHashMap(item, only, ignore));
-    }
-
-    return items;
-  }
-
-  return toHashMap(data, only, ignore);
+export const toView = (
+    data: any | any[],
+    only?: string[],
+    ignore?: string[],
+): HashMap | HashMap[] => {
+  return Array.isArray(data) ?
+    data.map((item) => toHashMap(item, only, ignore)) :
+    toHashMap(data, only, ignore);
 };
 
 export const setNestedValue = (
