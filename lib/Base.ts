@@ -36,9 +36,9 @@ export const toHashMap = (
 };
 
 export const toView = (
-    data: any | any[],
+    data: any,
     options: HashMapOptions = {},
-): HashMap | HashMap[] => {
+): any => {
   return Array.isArray(data) ?
     data.map((item) => toHashMap(item, options)) :
     toHashMap(data, options);
