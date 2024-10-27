@@ -1,16 +1,23 @@
 import {HashMap} from './Types';
+interface HashMapOptions {
+  include?: string[];
+  exclude?: string[];
+}
 
-export const toHashMap = function(
-    o: any,
-    only?: string[],
-    ignore?: string[],
-): HashMap {
-  // Early return if 'only' is defined but empty, resulting in an empty object.
-  if (only && only.length === 0) return {};
+export const toHashMap = (
+  obj: Record<string, any>,
+  options: HashMapOptions = {}
+): HashMap => {
+  const { include, exclude } = options;
 
-  return Object.entries(o).reduce((data: HashMap, [key, value]) => {
-    // Skip keys not in 'only' list or present in 'ignore' list
-    if ((only && !only.includes(key)) || (ignore && ignore.includes(key))) {
+  return Object.entries(obj).reduce((data: HashMap, [key, value]) => {
+    // Include only specified keys if `include` is defined at the top level
+    if (include && !include.includes(key)) {
+      return data;
+    }
+
+    // Exclude specified keys if `exclude` is defined
+    if (exclude && exclude.includes(key)) {
       return data;
     }
 
@@ -19,23 +26,22 @@ export const toHashMap = function(
       return data;
     }
 
-    // Recursively process nested objects, skip if it's an array
-    data[key] = typeof value === 'object' && !Array.isArray(value) ?
-      toHashMap(value) :
-      value;
+    // Recursively process nested objects without filtering by `include` or `exclude`
+    data[key] = typeof value === 'object' && !Array.isArray(value)
+      ? toHashMap(value) // Call without `options` for nested objects
+      : value;
 
     return data;
   }, {});
 };
 
 export const toView = (
-    data: any | any[],
-    only?: string[],
-    ignore?: string[],
+  data: any | any[],
+  options: HashMapOptions = {}
 ): HashMap | HashMap[] => {
-  return Array.isArray(data) ?
-    data.map((item) => toHashMap(item, only, ignore)) :
-    toHashMap(data, only, ignore);
+  return Array.isArray(data)
+    ? data.map((item) => toHashMap(item, options))
+    : toHashMap(data, options);
 };
 
 export const setNestedValue = (

@@ -29,8 +29,8 @@ describe('toHashMap', function() {
     });
   });
 
-  it('should return all data (only)', function() {
-    assert.deepEqual(toHashMap(new Dummy(), ["foo", "bas"]), {
+  it('should return all data (include)', function() {
+    assert.deepEqual(toHashMap(new Dummy(), {include: ["foo", "bas"]}), {
       foo: "AAA",
       bas: {
         baz: "CCC"
@@ -38,8 +38,8 @@ describe('toHashMap', function() {
     });
   });
 
-  it('should return all data (ignore)', function() {
-    assert.deepEqual(toHashMap(new Dummy(), null, ["bas", "arr"]), {
+  it('should return all data (exclude)', function() {
+    assert.deepEqual(toHashMap(new Dummy(), {exclude: ["bas", "arr"]}), {
       foo: "AAA",
       bar: "BBB"
     });
@@ -48,7 +48,7 @@ describe('toHashMap', function() {
 
 describe('toView', function() {
   it('should return all data (only function)', function() {
-    assert.deepEqual(toView(new Dummy(), ['foo', 'bar']), {
+    assert.deepEqual(toView(new Dummy(), {include: ['foo', 'bar']}), {
       foo: "AAA",
       bar: "BBB"
     });
