@@ -5,10 +5,10 @@ interface HashMapOptions {
 }
 
 export const toHashMap = (
-  obj: Record<string, any>,
-  options: HashMapOptions = {}
+    obj: Record<string, any>,
+    options: HashMapOptions = {},
 ): HashMap => {
-  const { include, exclude } = options;
+  const {include, exclude} = options;
 
   return Object.entries(obj).reduce((data: HashMap, [key, value]) => {
     // Include only specified keys if `include` is defined at the top level
@@ -27,21 +27,21 @@ export const toHashMap = (
     }
 
     // Recursively process nested objects without filtering by `include` or `exclude`
-    data[key] = typeof value === 'object' && !Array.isArray(value)
-      ? toHashMap(value) // Call without `options` for nested objects
-      : value;
+    data[key] = typeof value === 'object' && !Array.isArray(value) ?
+      toHashMap(value) : // Call without `options` for nested objects
+      value;
 
     return data;
   }, {});
 };
 
 export const toView = (
-  data: any | any[],
-  options: HashMapOptions = {}
+    data: any | any[],
+    options: HashMapOptions = {},
 ): HashMap | HashMap[] => {
-  return Array.isArray(data)
-    ? data.map((item) => toHashMap(item, options))
-    : toHashMap(data, options);
+  return Array.isArray(data) ?
+    data.map((item) => toHashMap(item, options)) :
+    toHashMap(data, options);
 };
 
 export const setNestedValue = (
