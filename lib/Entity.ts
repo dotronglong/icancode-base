@@ -11,7 +11,7 @@ export class Entity implements HashMapImportable {
    */
   fromHashMap(data: HashMap): void {
     for (const key in data) {
-      if (Object.prototype.hasOwnProperty.call(this, key)) {
+      if (key in this) {
         (this as any)[key] = data[key];
       }
     }
