@@ -1,4 +1,5 @@
 export * from './lib/Base';
+export * from './lib/Debug';
 export * from './lib/HashMap';
 export * from './lib/Entity';
 export * from './lib/Crypto';
