@@ -1,7 +1,7 @@
 type StringHashMap = {[key: string]: string};
 type HashMap = {[key: string]: any};
 
-export {
+export type {
   StringHashMap,
   HashMap,
 };
